@@ -15,7 +15,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 const AffirmationPractice = () => {
   const { itemId } = useLocalSearchParams();
   const [affirmation, setAffirmation] = useState<GalleryPreviewData>();
-
+  const [sentences, setSentences] = useState<string[]>([]);
   useEffect(() => {
     for (let idx = 0; idx < AFFIRMATION_GALLERY.length; idx++) {
       const affirmationsData = AFFIRMATION_GALLERY[idx].data;
@@ -25,6 +25,13 @@ const AffirmationPractice = () => {
       );
       if (affirmationToStart) {
         setAffirmation(affirmationToStart);
+
+        const affirmationsArray = affirmationToStart.text.split(".");
+        // remove the last element if it's an empty string
+        if (affirmationsArray[affirmationsArray.length - 1] === "") {
+          affirmationsArray.pop();
+        }
+        setSentences(affirmationsArray);
         return;
       }
     }
@@ -46,9 +53,14 @@ const AffirmationPractice = () => {
           <ScrollView className="mt-20" showsVerticalScrollIndicator={false}>
             <View className="h-full justify-center">
               <View className="h-4/5 justify-center">
-                <Text className="text-white text-center text-3xl mb-12 font-bold">
-                  {affirmation?.text}
-                </Text>
+                {sentences.map((sentence, idx) => (
+                  <Text
+                    key={idx}
+                    className="text-white text-center text-3xl mb-12 font-bold"
+                  >
+                    {sentence}.
+                  </Text>
+                ))}
               </View>
             </View>
           </ScrollView>
