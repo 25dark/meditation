@@ -9,6 +9,7 @@ import CustomButton from "@/components/CustomButton";
 import { useRouter } from "expo-router";
 import AppGradient from "@/components/AppGradient";
 
+
 const App = () => {
   const router = useRouter();
   return (
